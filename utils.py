@@ -232,7 +232,7 @@ def plot_results(models, train, validation):
         plt.scatter(y_train, models['y_train_predict'][i], alpha=0.7)
         plt.xlabel('target')
         plt.ylabel('prediction')
-        plt.title(models['type'][i])
+        plt.title(models['type'][i]+': train')
         plt.tight_layout()
 
     return 0

@@ -3,14 +3,14 @@ import time
 
 
 # Initialization
-num_text_feature = 60
-order_poly_feature = 1
+num_text_feature = 160
+order_poly_feature = 2
 include_bias = False
-add_word_count = False
+add_word_count = True
 add_text_features = True
 add_poly_features = True
 scale = False
-alpha = [1]
+alpha = [1, 10, 100, 1000, 2000, 3000]
 
 # Run
 t = time.time()
