@@ -170,11 +170,6 @@ def linear_regression_model(train, validation, alpha, depth=None):
                             random_state=random_state)],
               'score_train': [], 'score_valid': [], 'mse_train': [], 'mse_valid': []}
 
-    # models = {'type': ['ridge'],
-    #           'model': [Ridge(alpha=0.1, fit_intercept=fit_intercept, normalize=normalize, max_iter=max_iter, tol=tol,
-    #                           random_state=random_state)],
-    #           'score_train': [], 'score_valid': [], 'mse_train': [], 'mse_valid': []}
-
     score_train = []
     score_valid = []
     mse_train = []
