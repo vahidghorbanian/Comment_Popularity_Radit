@@ -9,7 +9,6 @@ include_bias = False
 add_word_count = False
 add_text_features = True
 add_poly_features = True
-scale = False
 alpha = 0
 
 # Run
@@ -42,11 +41,6 @@ if add_poly_features == True:
 print('training set shape:', train['X'].shape)
 print('validation set shape:', validation['X'].shape)
 print('test set shape:', test['X'].shape)
-
-if scale==True:
-    train = scale_data(train)
-    validation = scale_data(validation)
-    test = scale_data(test)
 
 models = linear_regression_model(train, validation, alpha, depth=None)
 print('models: ', models['type'])

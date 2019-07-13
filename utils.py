@@ -145,15 +145,6 @@ def add_interaction_terms(data, order=2, include_bias=False):
     return data
 
 
-def scale_data(data):
-    X = data['X'].values[:, 1:]
-    scale = MinMaxScaler(feature_range=(0, 1), copy=True)
-    scale.fit(data['X'].values[:, 1:])
-    X = scale.transform(X)
-    data['X'].loc[:, data['X'].columns[1:]] = X
-    return data
-
-
 def linear_regression_model(train, validation, alpha, depth=None):
 
     X_train = train['X'].values[:, 1:]
