@@ -12,32 +12,32 @@
     <session id="1728740341">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.5" value="3" />
-          <entry key="project.opened" value="6" />
+          <entry key="project.open.time.4" value="2" />
+          <entry key="project.open.time.5" value="4" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="15" />
+          <entry key="py" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="15" />
+          <entry key="Python" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="14521" />
+          <entry key="py" value="15382" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="14521" />
+          <entry key="Python" value="15382" />
         </counts>
       </usages-collector>
     </session>
@@ -47,8 +47,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="220">
+              <caret line="32" column="69" lean-forward="true" selection-start-line="32" selection-start-column="69" selection-end-line="32" selection-end-column="69" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -59,18 +59,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="235" column="26" lean-forward="true" selection-start-line="235" selection-start-column="26" selection-end-line="235" selection-end-column="26" />
+            <state relative-caret-position="420">
+              <caret line="197" column="17" selection-start-line="197" selection-start-column="17" selection-end-line="197" selection-end-column="17" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#269#726#0" />
-                <element signature="e#833#2221#0" />
-                <element signature="e#2275#3397#0" />
-                <element signature="e#3429#3981#0" />
-                <element signature="e#3781#4191#0" />
-                <element signature="e#4262#5341#0" />
-                <marker date="1562624732053" expanded="true" signature="488:489" ph="..." />
-                <marker date="1562624732053" expanded="true" signature="7959:9282" ph="..." />
               </folding>
             </state>
           </provider>
@@ -111,6 +103,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -122,7 +115,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -185,11 +177,11 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.12100213" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.06076759" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.17028199" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.27874187" />
       <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="3" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="4" />
@@ -203,8 +195,8 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="R Graphics" order="3" />
       <window_info anchor="right" id="R Packages" order="4" />
-      <window_info anchor="right" id="Run" order="5" weight="0.48027718" />
-      <window_info anchor="right" id="Debug" order="6" weight="0.37899786" />
+      <window_info active="true" anchor="right" id="Run" order="5" visible="true" weight="0.40405118" />
+      <window_info anchor="right" id="Debug" order="6" weight="0.38059703" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" weight="0.1716418" />
@@ -245,47 +237,47 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string>data['X'].loc[:, data['X'].columns[1:]] = X</expression-string>
+        <expression-string>models['mse_train']</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>X</expression-string>
+        <expression-string>models['mse_train']/[1000]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>scale.transform(X)</expression-string>
+        <expression-string>models['mse_train']/1000</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>scale.data_min_</expression-string>
+        <expression-string>1</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>scale.data_max_</expression-string>
+        <expression-string>y_train_predict[i]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>scaler.data_max_</expression-string>
+        <expression-string>y_train_predict</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>scale.fit(X)</expression-string>
+        <expression-string>mse(y_train, y_train_predict[i])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>train['X'].drop(['is_root', 'controversiality'],axis=1)</expression-string>
+        <expression-string>mse_train.append(mse(y_train, y_train_predict[i]))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>train['X'].drop(['is_root', 'controversiality'])</expression-string>
+        <expression-string>y_train</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -320,13 +312,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sklearn/utils/validation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="234" selection-start-line="234" selection-end-line="234" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sklearn/metrics/regression.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="214">
@@ -348,28 +333,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sklearn/utils/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="234" selection-start-line="234" selection-end-line="234" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="235" column="26" lean-forward="true" selection-start-line="235" selection-start-column="26" selection-end-line="235" selection-end-column="26" />
+        <state relative-caret-position="420">
+          <caret line="197" column="17" selection-start-line="197" selection-start-column="17" selection-end-line="197" selection-end-column="17" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#269#726#0" />
-            <element signature="e#833#2221#0" />
-            <element signature="e#2275#3397#0" />
-            <element signature="e#3429#3981#0" />
-            <element signature="e#3781#4191#0" />
-            <element signature="e#4262#5341#0" />
-            <marker date="1562624732053" expanded="true" signature="488:489" ph="..." />
-            <marker date="1562624732053" expanded="true" signature="7959:9282" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="220">
+          <caret line="32" column="69" lean-forward="true" selection-start-line="32" selection-start-column="69" selection-end-line="32" selection-end-column="69" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

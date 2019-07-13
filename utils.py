@@ -2,8 +2,10 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import PolynomialFeatures, MinMaxScaler
-from sklearn.linear_model import Lasso, Ridge
+from sklearn.linear_model import Lasso, Ridge, LinearRegression
 from sklearn.metrics import mean_squared_error as mse
+from sklearn.tree import DecisionTreeRegressor as dt
+from sklearn.ensemble import RandomForestRegressor as rfr
 import os.path
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
@@ -61,8 +63,10 @@ def split_data(data, type='given', validation_size=.2, test_size=0.1):
 
 
 def high_rank_features(data, num_feature=160):
-    type = data['type']
-    txt = data['X']['text'].values
+    # type = data['type']
+    # txt = data['X']['text'].values
+    type = 'train'
+    txt = data[:, 0]
     print('\nlooking for top ' +str(num_feature)+ ' high rank text features in '+type+' set ...')
     for i in np.arange(0, len(txt), 1):
         txt[i] = txt[i].lower()
@@ -87,15 +91,16 @@ def high_rank_features(data, num_feature=160):
         feature_count.append(count[idx])
         count.pop(idx)
         words_unique.pop(idx)
-    return feature_name, feature_count
+    return feature_name, feature_count, len(words)
 
 
-def add_total_word_count(data):
+def add_total_word_count(data, num_total_words):
     type = data['type']
     text = data['X']['text'].values
     print('Calculating text features counts in ' + type + ' set ...')
     count = []
     for i in np.arange(0, len(text), 1):
+        # count.append(len(text[i].split())/num_total_words)
         count.append(len(text[i].split()))
     data['X']['text'] = text
     data['X']['count'] = count
@@ -139,6 +144,7 @@ def add_interaction_terms(data, order=2, include_bias=False):
         data['X'] = pd.DataFrame(data=val, columns=col)
     return data
 
+
 def scale_data(data):
     X = data['X'].values[:, 1:]
     scale = MinMaxScaler(feature_range=(0, 1), copy=True)
@@ -147,96 +153,49 @@ def scale_data(data):
     data['X'].loc[:, data['X'].columns[1:]] = X
     return data
 
-def linear_regression_model(train, validation, alpha):
-    # train['X'].drop(['controversiality'], axis=1)
-    # validation['X'].drop(['controversiality'], axis=1)
+
+def linear_regression_model(train, validation, alpha, depth=None):
 
     X_train = train['X'].values[:, 1:]
     y_train = np.ravel(train['y'].values)
     X_validation = validation['X'].values[:, 1:]
     y_validation = np.ravel(validation['y'].values)
 
-    models = {'type': ['ridge'],
+    models = {'type': ['ridge', 'decision tree', 'random forest'],
               'model': [Ridge(alpha=0.1, fit_intercept=fit_intercept, normalize=normalize, max_iter=max_iter, tol=tol,
-                              random_state=random_state)],
-              'coef':[], 'intercept': [], 'score_train': [], 'score_valid': [], 'mse_train': [], 'mse_valid': [],
-              'y_train_predict': [], 'y_valid_predict': [], 'alpha': []}
+                              random_state=random_state),
+                        dt(criterion='mse', splitter='best', max_depth=depth, min_samples_split=2, min_samples_leaf=1,
+                           random_state=random_state),
+                        rfr(n_estimators=100, criterion='mse', max_depth=depth, min_samples_split=2, min_samples_leaf=1,
+                            random_state=random_state)],
+              'score_train': [], 'score_valid': [], 'mse_train': [], 'mse_valid': []}
 
+    # models = {'type': ['ridge'],
+    #           'model': [Ridge(alpha=0.1, fit_intercept=fit_intercept, normalize=normalize, max_iter=max_iter, tol=tol,
+    #                           random_state=random_state)],
+    #           'score_train': [], 'score_valid': [], 'mse_train': [], 'mse_valid': []}
+
+    score_train = []
+    score_valid = []
+    mse_train = []
+    mse_valid = []
+    y_train_predict = []
+    y_valid_predict = []
     for i in np.arange(0, len(models['type']), 1):
         m = models['model'][i]
-        coef = []
-        intercept = []
-        score_train = []
-        score_valid = []
-        mse_train = []
-        mse_valid = []
-        y_train_predict = []
-        y_valid_predict = []
-        for j in np.arange(0, len(alpha), 1):
-            m.alpha = alpha[j]
-            m.fit(X_train, y_train)
-            coef.append(m.coef_)
-            intercept.append(m.intercept_)
-            score_train.append(m.score(X_train, y_train))
-            score_valid.append(m.score(X_validation, y_validation))
-            y_train_predict.append(m.predict(X_train))
-            y_valid_predict.append(m.predict(X_validation))
-            mse_train.append(mse(y_train, y_train_predict[j]))
-            mse_valid.append(mse(y_validation, y_valid_predict[j]))
-        models['coef'].append(coef)
-        models['intercept'].append(intercept)
-        models['score_train'].append(score_train)
-        models['score_valid'].append(score_valid)
-        models['mse_train'].append(mse_train)
-        models['mse_valid'].append(mse_valid)
-        models['y_train_predict'].append(y_train_predict)
-        models['y_valid_predict'].append(y_valid_predict)
-    models['alpha'] = alpha
+        m.alpha = alpha
+        m.fit(X_train, y_train)
+        score_train.append(m.score(X_train, y_train))
+        score_valid.append(m.score(X_validation, y_validation))
+        y_train_predict.append(m.predict(X_train))
+        y_valid_predict.append(m.predict(X_validation))
+        mse_train.append(mse(y_train, y_train_predict[i]))
+        mse_valid.append(mse(y_validation, y_valid_predict[i]))
+    models['score_train'].append(score_train)
+    models['score_valid'].append(score_valid)
+    models['mse_train'].append(mse_train)
+    models['mse_valid'].append(mse_valid)
     return models
-
-
-def plot_results(models, train, validation):
-    y_train = np.ravel(train['y'].values)
-    y_validation = np.ravel(validation['y'].values)
-
-    for i in np.arange(0, len(models['type']), 1):
-        plt.figure(figsize=(5, 3))
-        plt.bar(models['alpha'], models['score_train'][i], align='center', alpha=0.7)
-        plt.xlabel('alpha')
-        plt.ylabel('training score')
-        plt.title(models['type'][i])
-        plt.tight_layout()
-
-        plt.figure(figsize=(5, 3))
-        plt.bar(models['alpha'], models['score_valid'][i], align='center', alpha=0.7)
-        plt.xlabel('alpha')
-        plt.ylabel('validation score')
-        plt.title(models['type'][i])
-        plt.tight_layout()
-
-        plt.figure(figsize=(5, 3))
-        plt.bar(models['alpha'], models['mse_train'][i], align='center', alpha=0.7)
-        plt.xlabel('alpha')
-        plt.ylabel('MSE training')
-        plt.title(models['type'][i])
-        plt.tight_layout()
-
-        plt.figure(figsize=(5, 3))
-        plt.bar(models['alpha'], models['mse_valid'][i], align='center', alpha=0.7)
-        plt.xlabel('alpha')
-        plt.ylabel('MSE validation')
-        plt.title(models['type'][i])
-        plt.tight_layout()
-
-        plt.figure(figsize=(5, 3))
-        plt.scatter(y_train, models['y_train_predict'][i], alpha=0.7)
-        plt.xlabel('target')
-        plt.ylabel('prediction')
-        plt.title(models['type'][i]+': train')
-        plt.tight_layout()
-
-    return 0
-
 
 
 
