@@ -1,4 +1,5 @@
 from utils import *
+import matplotlib.pyplot as plt
 import time
 
 
@@ -18,7 +19,6 @@ file_name = 'proj1_data.json'
 data, main_feature_name, target_name = load_data(file_name)
 train, validation, test = split_data(data, type='given', validation_size=.2, test_size=0.01)
 
-# if add_word_count==True | add_text_features==True:
 high_rank_feature_name, high_rank_feature_count, num_total_words = high_rank_features(data.values[:, :-1],
                                                                                       num_feature=num_text_feature)
 
@@ -42,12 +42,20 @@ print('training set shape:', train['X'].shape)
 print('validation set shape:', validation['X'].shape)
 print('test set shape:', test['X'].shape)
 
-models = linear_regression_model(train, validation, alpha, depth=None)
-print('models: ', models['type'])
-print('R2 training:', models['score_train'])
-print('R2 validation:', models['score_valid'])
-print('MSE training:', models['mse_train'])
-print('MSE validation:', models['mse_valid'])
+models = linear_regression_model(train, validation, alpha, depth=20)
 
 elapsed = time.time() - t
 print('\nRun time: ', elapsed, 's')
+
+plt.bar(models['type'], models['score_train'])
+plt.ylabel('R2: Training')
+plt.figure()
+plt.bar(models['type'], models['score_valid'])
+plt.ylabel('R2: Validation')
+plt.figure()
+plt.bar(models['type'], models['mse_train'])
+plt.ylabel('MSE: Training')
+plt.figure()
+plt.bar(models['type'], models['mse_valid'])
+plt.ylabel('MSE: Validation')
+plt.show()

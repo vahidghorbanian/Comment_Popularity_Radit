@@ -8,7 +8,6 @@ from sklearn.tree import DecisionTreeRegressor as dt
 from sklearn.ensemble import RandomForestRegressor as rfr
 import os.path
 from numpy import genfromtxt
-import matplotlib.pyplot as plt
 import json
 
 
@@ -151,7 +150,6 @@ def linear_regression_model(train, validation, alpha, depth=None):
     y_train = np.ravel(train['y'].values)
     X_validation = validation['X'].values[:, 1:]
     y_validation = np.ravel(validation['y'].values)
-
     models = {'type': ['ridge', 'decision tree', 'random forest'],
               'model': [Ridge(alpha=0.1, fit_intercept=fit_intercept, normalize=normalize, max_iter=max_iter, tol=tol,
                               random_state=random_state),
@@ -160,27 +158,23 @@ def linear_regression_model(train, validation, alpha, depth=None):
                         rfr(n_estimators=100, criterion='mse', max_depth=depth, min_samples_split=2, min_samples_leaf=1,
                             random_state=random_state)],
               'score_train': [], 'score_valid': [], 'mse_train': [], 'mse_valid': []}
-
-    score_train = []
-    score_valid = []
-    mse_train = []
-    mse_valid = []
     y_train_predict = []
     y_valid_predict = []
     for i in np.arange(0, len(models['type']), 1):
         m = models['model'][i]
         m.alpha = alpha
         m.fit(X_train, y_train)
-        score_train.append(m.score(X_train, y_train))
-        score_valid.append(m.score(X_validation, y_validation))
+        models['score_train'].append(m.score(X_train, y_train))
+        models['score_valid'].append(m.score(X_validation, y_validation))
         y_train_predict.append(m.predict(X_train))
         y_valid_predict.append(m.predict(X_validation))
-        mse_train.append(mse(y_train, y_train_predict[i]))
-        mse_valid.append(mse(y_validation, y_valid_predict[i]))
-    models['score_train'].append(score_train)
-    models['score_valid'].append(score_valid)
-    models['mse_train'].append(mse_train)
-    models['mse_valid'].append(mse_valid)
+        models['mse_train'].append(mse(y_train, y_train_predict[i]))
+        models['mse_valid'].append(mse(y_validation, y_valid_predict[i]))
+    print('models: ', models['type'])
+    print('R2 training:', models['score_train'])
+    print('R2 validation:', models['score_valid'])
+    print('MSE training:', models['mse_train'])
+    print('MSE validation:', models['mse_valid'])
     return models
 
 
